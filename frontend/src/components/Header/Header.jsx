@@ -7,6 +7,8 @@ import {
   FormControl,
   Form,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import MyNotes from "../../screens/MyNotes/MyNotes";
 
 const Header = () => {
   return (
@@ -25,7 +27,7 @@ const Header = () => {
             </Form>
           </Nav>
           <Nav>
-            <Nav.Link href="#home">My Notes</Nav.Link>
+            <Nav.Link href="/MyNotes">My Notes</Nav.Link>
             <NavDropdown title="Nyima" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.4">Logout</NavDropdown.Item>
