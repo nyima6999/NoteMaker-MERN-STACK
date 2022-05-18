@@ -1,4 +1,4 @@
-# NoteMaker-MERN-STACk
+# NoteMaker-MERN-STACK (ongoing project)
 
 # Goal
 
