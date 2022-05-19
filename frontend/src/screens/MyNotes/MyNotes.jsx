@@ -13,6 +13,7 @@ const MyNotes = () => {
     }
   };
 
+  // api call using axios
   const fetchNotes = async () => {
     const { data } = await axios.get("/api/notes");
     setNotes(data);
