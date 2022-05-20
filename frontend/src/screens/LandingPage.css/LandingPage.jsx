@@ -6,7 +6,9 @@ const LandingPage = () => {
       <Container>
         <Row>
           <div className="intro-text">
-            <h1 className="title">Welcome To Note Maker</h1>
+            <h1 className="title">
+              Welcome To Note <br></br>Maker
+            </h1>
             <p className="subtitle">One safe place for your notes</p>
             <div className="btn-container">
               {" "}

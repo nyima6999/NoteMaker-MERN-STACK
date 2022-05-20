@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
 .main {
   min-height: 93vh;
   display: flex;
@@ -8,10 +10,13 @@
 }
 
 .title {
-  font-size: 5.9em;
+  font-size: 3.5em;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
 }
 .subtitle {
-  font-size: 25px;
+  font-size: 20px;
+  font-family: "Montserrat", sans-serif;
   padding-top: 10px;
 }
 .intro-text {
@@ -21,11 +26,13 @@
 .btn-container {
   margin-top: 50px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 10%;
 }
 .landing-btn {
-  width: 12.5em;
-  height: 3.4em;
+  width: 8em;
+  height: 2.5em;
+  font-family: "Montserrat", sans-serif;
 }
 @media only screen and (min-width: 1200px) {
   .btn-container {
