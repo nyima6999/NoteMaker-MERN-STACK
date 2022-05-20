@@ -1,7 +1,7 @@
-import React, { Children } from "react";
+import React, { Children, useEffect } from "react";
 import { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainScreen from "../../components/MainScreen";
 import "./LoginPage.css";
 import axios from "axios";
@@ -13,6 +13,15 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+
+    if (userInfo) {
+      navigate("/MyNotes");
+    }
+  }, [navigate]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -37,13 +46,14 @@ const LoginPage = () => {
       setLoading(false);
     } catch (error) {
       setError(error.response.data.message);
+      setLoading(false);
     }
   };
 
   return (
-    <MainScreen title="WELCOME BACK, LOGIN PLEASE">
+    <MainScreen title="Welcome, Login Here">
       <div className="loginContainer">
-        {error && <Error>{Children}</Error>}
+        {error && <Error variant="danger">{Children}</Error>}
         {loading && <Loading />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="formBasicEmail">
