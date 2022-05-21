@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainScreen from "../../components/MainScreen";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 import Error from "../../components/Error";
-import axios from "axios";
-// import "./RegisterScreen.css";
+// import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../actions/userActions";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -17,39 +18,52 @@ const RegisterPage = () => {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/MyNotes");
+    }
+  }, [navigate, userInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmpassword) {
-      setMessage("Password Do Not Match");
+      setMessage("Password do not match, please try again!");
     } else {
-      setMessage(null);
-      try {
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-        setLoading(true);
-        const { data } = await axios.post(
-          "api/users",
-          {
-            name,
-            pic,
-            email,
-            password,
-          },
-          config
-        );
-        setLoading(false);
-        localStorage.setItem("userInfo", JSON.stringify(data));
-      } catch (error) {
-        setError(error.response.data.message);
-      }
+      dispatch(register(name, email, password, pic));
     }
-    console.log(email);
+    // if (password !== confirmpassword) {
+    //   setMessage("Password Do Not Match");
+    // } else {
+    //   setMessage(null);
+    //   try {
+    //     const config = {
+    //       headers: {
+    //         "Content-type": "application/json",
+    //       },
+    //     };
+    //     setLoading(true);
+    //     const { data } = await axios.post(
+    //       "api/users",
+    //       {
+    //         name,
+    //         pic,
+    //         email,
+    //         password,
+    //       },
+    //       config
+    //     );
+    //     setLoading(false);
+    //     localStorage.setItem("userInfo", JSON.stringify(data));
+    //   } catch (error) {
+    //     setError(error.response.data.message);
+    //   }
+    // }
+    // console.log(email);
   };
 
   // image upload function/Cloudinary
