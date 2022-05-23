@@ -1,28 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import { useEffect } from "react";
 import { Accordion, Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainScreen from "../../components/MainScreen";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { listNotes } from "../../actions/noteActions";
+import Loading from "../../components/Loading";
+import Error from "../../components/Error";
 
 const MyNotes = () => {
-  const [notes, setNotes] = useState([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const noteList = useSelector((state) => state.noteList);
+  const { loading, notes, error } = noteList;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    dispatch(listNotes());
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [dispatch, navigate]);
 
   const deleteHandler = (id) => {
     if (window.confirm("are you sure?")) {
     }
   };
-
-  // api call using axios
-  const fetchNotes = async () => {
-    const { data } = await axios.get("/api/notes");
-    setNotes(data);
-  };
-  console.log(notes);
-
-  useEffect(() => {
-    fetchNotes();
-  }, []);
 
   return (
     <MainScreen title="Welcome Back Nyima .....">
@@ -31,8 +37,9 @@ const MyNotes = () => {
           Create New Notes
         </Button>
       </Link>
-
-      {notes.map((note) => (
+      {loading && <Loading />}
+      {error && <Error variant="danger">{error}</Error>}
+      {notes?.map((note) => (
         <Accordion key={notes._id}>
           <Accordion.Item eventKey="0">
             <Card style={{ margin: 10 }}>

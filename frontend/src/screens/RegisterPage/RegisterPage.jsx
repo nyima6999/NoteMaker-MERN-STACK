@@ -4,7 +4,6 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 import Error from "../../components/Error";
-// import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/userActions";
 
