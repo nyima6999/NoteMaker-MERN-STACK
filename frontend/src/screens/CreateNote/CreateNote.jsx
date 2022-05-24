@@ -27,8 +27,8 @@ function CreateNote() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createNoteAction(title, content));
     if (!title || !content) return;
+    dispatch(createNoteAction(title, content));
 
     resetHandler();
     navigate("/MyNotes");

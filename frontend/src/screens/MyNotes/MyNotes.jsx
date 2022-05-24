@@ -18,12 +18,18 @@ const MyNotes = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const noteCreate = useSelector((state) => state.noteCreate);
+  const { success: successCreate } = noteCreate;
+
+  const noteUpdate = useSelector((state) => state.noteUpdate);
+  const { success: successUpdate } = noteUpdate;
+
   useEffect(() => {
     dispatch(listNotes());
     if (!userInfo) {
       navigate("/");
     }
-  }, [dispatch, navigate]);
+  }, [dispatch, successCreate, navigate, userInfo, successUpdate]);
 
   const deleteHandler = (id) => {
     if (window.confirm("are you sure?")) {
@@ -39,7 +45,7 @@ const MyNotes = () => {
       </Link>
       {loading && <Loading />}
       {error && <Error variant="danger">{error}</Error>}
-      {notes?.map((note) => (
+      {notes?.reverse().map((note) => (
         <Accordion key={notes._id}>
           <Accordion.Item eventKey="0">
             <Card style={{ margin: 10 }}>

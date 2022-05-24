@@ -7,6 +7,7 @@ import MyNotes from "./screens/MyNotes/MyNotes";
 import LoginPage from "./screens/LoginPage/LoginPage";
 import RegisterPage from "./screens/RegisterPage/RegisterPage";
 import CreateNote from "./screens/CreateNote/CreateNote";
+import SingleNote from "./screens/SingleNote/SingleNote";
 
 const App = () => (
   <BrowserRouter>
@@ -18,6 +19,7 @@ const App = () => (
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/createnote" element={<CreateNote />} />
         <Route exact path="/register" element={<RegisterPage />} />
+        <Route exact path="/note/:id" element={<SingleNote />} />
       </Routes>
     </main>
     <Footer />
