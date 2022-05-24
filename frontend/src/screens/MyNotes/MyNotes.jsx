@@ -32,7 +32,7 @@ const MyNotes = () => {
 
   return (
     <MainScreen title="Welcome Back Nyima .....">
-      <Link to="createnote">
+      <Link to="/createnote">
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
           Create New Notes
         </Button>
@@ -73,7 +73,10 @@ const MyNotes = () => {
                   <blockquote className="blockquote mb-0">
                     <p>{note.content}</p>
                     <footer className="" blockquote-footer>
-                      Created On - date
+                      {/* Created on{" "}
+                      <cite title="Source Title">
+                        {note.createdAt.substring(0, 10)}
+                      </cite> */}
                     </footer>
                   </blockquote>
                 </Card.Body>

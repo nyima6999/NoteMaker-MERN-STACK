@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MyNotes from "./screens/MyNotes/MyNotes";
 import LoginPage from "./screens/LoginPage/LoginPage";
 import RegisterPage from "./screens/RegisterPage/RegisterPage";
+import CreateNote from "./screens/CreateNote/CreateNote";
 
 const App = () => (
   <BrowserRouter>
@@ -15,6 +16,7 @@ const App = () => (
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/MyNotes" element={<MyNotes />} />
         <Route exact path="/login" element={<LoginPage />} />
+        <Route exact path="/createnote" element={<CreateNote />} />
         <Route exact path="/register" element={<RegisterPage />} />
       </Routes>
     </main>
