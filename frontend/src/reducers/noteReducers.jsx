@@ -41,6 +41,20 @@ export const noteCreateReducer = (state = {}, action) => {
   }
 };
 
+// delete note
+export const noteDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case NOTES_DELETE_REQUEST:
+      return { loading: true };
+    case NOTES_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case NOTES_DELETE_FAIL:
+      return { loading: false, error: action.payload, success: false };
+    default:
+      return state;
+  }
+};
+
 // update note
 export const noteUpdateReducer = (state = {}, action) => {
   switch (action.type) {
@@ -49,20 +63,6 @@ export const noteUpdateReducer = (state = {}, action) => {
     case NOTES_UPDATE_SUCCESS:
       return { loading: false, notes: action.payload };
     case NOTES_UPDATE_FAIL:
-      return { loading: false, error: action.payload, success: false };
-    default:
-      return state;
-  }
-};
-
-// delete note
-export const noteDeleteReducer = (state = {}, action) => {
-  switch (action.type) {
-    case NOTES_DELETE_REQUEST:
-      return { loading: true };
-    case NOTES_DELETE_SUCCESS:
-      return { loading: false, notes: action.payload };
-    case NOTES_DELETE_FAIL:
       return { loading: false, error: action.payload, success: false };
     default:
       return state;

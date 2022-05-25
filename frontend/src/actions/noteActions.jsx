@@ -119,7 +119,7 @@ export const deleteNoteAction = (id) => async (dispatch) => {
       type: NOTES_DELETE_REQUEST,
     });
 
-    const { data } = await axios.delete(`/api/ads/${id}`);
+    const { data } = await axios.delete(`/api/notes/${id}`);
 
     dispatch({
       type: NOTES_DELETE_SUCCESS,

@@ -3,7 +3,7 @@ import MainScreen from "../../components/MainScreen";
 import axios from "axios";
 import { Button, Card, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { updateNoteAction } from "../../actions/noteActions";
+import { updateNoteAction, deleteNoteAction } from "../../actions/noteActions";
 import Error from "../../components/Error";
 import Loading from "../../components/Loading";
 import ReactMarkdown from "react-markdown";
@@ -20,15 +20,15 @@ function SingleNote() {
   const noteUpdate = useSelector((state) => state.noteUpdate);
   const { loading, error } = noteUpdate;
 
-  //   const noteDelete = useSelector((state) => state.noteDelete);
-  //   const { loading: loadingDelete, error: errorDelete } = noteDelete;
+  const noteDelete = useSelector((state) => state.noteDelete);
+  const { loading: loadingDelete, error: errorDelete } = noteDelete;
 
-  //   const deleteHandler = (id) => {
-  //     if (window.confirm("Are you sure?")) {
-  //       dispatch(deleteNoteAction(id));
-  //     }
-  //     history.push("/mynotes");
-  //   };
+  const deleteHandler = (id) => {
+    if (window.confirm("Are you sure?")) {
+      dispatch(deleteNoteAction(id));
+    }
+    navigate("/MyNotes");
+  };
 
   useEffect(() => {
     const fetching = async () => {
@@ -61,11 +61,9 @@ function SingleNote() {
         <Card.Header>Edit your Note</Card.Header>
         <Card.Body>
           <Form onSubmit={updateHandler}>
-            {/* {loadingDelete && <Loading />} */}
+            {loadingDelete && <Loading />}
             {error && <Error variant="danger">{error}</Error>}
-            {/* {errorDelete && (
-              <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
-            )} */}
+            {errorDelete && <Error variant="danger">{errorDelete}</Error>}
             <Form.Group controlId="title">
               <Form.Label>Title</Form.Label>
               <Form.Control
@@ -97,14 +95,14 @@ function SingleNote() {
             <Button variant="primary" type="submit">
               Update Note
             </Button>
-            {/* <Button
+            <Button
               className="mx-2"
               variant="danger"
-              onClick={() => deleteHandler(match.params.id)}
+              onClick={() => deleteHandler(params.id)}
             >
               Delete Note
-            </Button> */}
-          </Form>
+            </Button>
+          </Form>{" "}
         </Card.Body>
 
         <Card.Footer className="text-muted"></Card.Footer>
