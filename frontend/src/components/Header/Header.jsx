@@ -8,7 +8,7 @@ import {
   Form,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { logout } from "../../actions/userActions";
 
 const Header = ({ setSearch }) => {
@@ -40,7 +40,8 @@ const Header = ({ setSearch }) => {
           </Nav>
           <Nav>
             <Nav.Link href="/MyNotes">My Notes</Nav.Link>
-            <NavDropdown title="Nyima" id="basic-nav-dropdown">
+            <NavDropdown title={`${userInfo?.name}`} id="basic-nav-dropdown">
+              {" "}
               <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
               <NavDropdown.Item onClick={logoutHandler}>
                 Logout

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteNoteAction, listNotes } from "../../actions/noteActions";
 import Loading from "../../components/Loading";
 import Error from "../../components/Error";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 const MyNotes = ({ search }) => {
   const navigate = useNavigate();
@@ -52,67 +53,68 @@ const MyNotes = ({ search }) => {
   };
 
   return (
-    <MainScreen title="Welcome Back Nyima .....">
+    <MainScreen title={` Welcome Back ${userInfo && userInfo.name} .....`}>
       <Link to="/createnote">
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
           Create New Notes
         </Button>
       </Link>
-      {loading && <Loading />}
       {error && <Error variant="danger">{error}</Error>}
       {errorDelete && <Error variant="danger">{errorDelete}</Error>}
+      {loading && <Loading />}
       {loadingDelete && <Loading />}
-      {notes
-        ?.reverse()
-        .filter((filteredNote) =>
-          filteredNote.title.toLowerCase().includes(search.toLowerCase())
-        )
-        .map((note) => (
-          <Accordion key={notes._id}>
-            <Accordion.Item eventKey="0">
-              <Card style={{ margin: 10 }}>
-                <Card.Header style={{ display: "flex" }}>
-                  <span
-                    style={{
-                      color: "black",
-                      textDecoration: "none",
-                      flex: 1,
-                      cursor: "pointer",
-                      alignSelf: "center",
-                      fontSize: 18,
-                    }}
-                  >
-                    <Accordion.Header>{note.title}</Accordion.Header>
-                  </span>
-
-                  <div>
-                    <Button href={`/note/${note._id}`}>Edit</Button>
-                    <Button
-                      variant="danger"
-                      className="mx-2"
-                      onClick={() => deleteHandler(note._id)}
+      {notes &&
+        notes
+          .filter((filteredNote) =>
+            filteredNote.title.toLowerCase().includes(search.toLowerCase())
+          )
+          .reverse()
+          .map((note) => (
+            <Accordion>
+              <Accordion.Item>
+                <Card style={{ margin: 10 }} key={note._id}>
+                  <Card.Header style={{ display: "flex" }}>
+                    <span
+                      style={{
+                        color: "black",
+                        textDecoration: "none",
+                        flex: 1,
+                        cursor: "pointer",
+                        alignSelf: "center",
+                        fontSize: 18,
+                      }}
                     >
-                      Delete
-                    </Button>
-                  </div>
-                </Card.Header>
-                <Accordion.Body>
-                  <Card.Body>
-                    <blockquote className="blockquote mb-0">
-                      <p>{note.content}</p>
-                      <footer className="" blockquote-footer>
-                        {/* Created on{" "}
-                      <cite title="Source Title">
-                        {note.createdAt.substring(0, 10)}
-                      </cite> */}
-                      </footer>
-                    </blockquote>
-                  </Card.Body>
-                </Accordion.Body>
-              </Card>
-            </Accordion.Item>
-          </Accordion>
-        ))}
+                      <Accordion.Header>{note.title}</Accordion.Header>
+                    </span>
+
+                    <div>
+                      <Button href={`/note/${note._id}`}>Edit</Button>
+                      <Button
+                        variant="danger"
+                        className="mx-2"
+                        onClick={() => deleteHandler(note._id)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </Card.Header>
+                  <Accordion.Body>
+                    <Card.Body>
+                      <blockquote className="blockquote mb-0">
+                        <footer className="" blockquote-footer>
+                          <ReactMarkdown>{note.content}</ReactMarkdown>
+                          {/* Created on{" "}
+                          <cite title="Source Title">
+                            {note.createdAt.substring(0, 10)}
+                          </cite> */}
+                        </footer>
+                      </blockquote>
+                    </Card.Body>
+                  </Accordion.Body>
+                </Card>
+              </Accordion.Item>
+            </Accordion>
+          ))}
     </MainScreen>
   );
 };
