@@ -38,17 +38,45 @@ const Header = ({ setSearch }) => {
               ></FormControl>
             </Form>
           </Nav>
-          <Nav>
-            <Nav.Link href="/MyNotes">My Notes</Nav.Link>
-            <NavDropdown title={`${userInfo?.name}`} id="basic-nav-dropdown">
+          {userInfo ? (
+            <Nav>
+              <Nav.Link>
+                <Link
+                  to="/MyNotes"
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  My Notes
+                </Link>
+              </Nav.Link>
+              {/* <Nav.Link href="/MyNotes">My Notes</Nav.Link> */}
+              <NavDropdown title={`${userInfo?.name}`} id="basic-nav-dropdown">
+                {" "}
+                <NavDropdown.Item href="profile">My Profile</NavDropdown.Item>
+                <NavDropdown.Item onClick={logoutHandler}>
+                  Logout
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+              </NavDropdown>
+            </Nav>
+          ) : (
+            <Nav>
               {" "}
-              <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
-              <NavDropdown.Item onClick={logoutHandler}>
-                Logout
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-            </NavDropdown>
-          </Nav>
+              <Nav.Link>
+                <Link
+                  to="/login"
+                  style={{
+                    color: "white",
+                    textDecoration: "none",
+                    fontSize: 18,
+                  }}
+                >
+                  Login
+                </Link>
+              </Nav.Link>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>
