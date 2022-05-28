@@ -7,6 +7,7 @@ import Loading from "../../components/Loading";
 import Error from "../../components/Error";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../../actions/userActions";
+import "./ProfileScreen.css";
 
 const ProfileScreen = () => {
   const navigate = useNavigate();
@@ -38,6 +39,30 @@ const ProfileScreen = () => {
     dispatch(updateProfile({ name, email, password, pic }));
   };
 
+  const postDetails = (pics) => {
+    setPicMessage(null);
+    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+      const data = new FormData();
+      data.append("file", pics);
+      data.append("upload_preset", "noteMaker");
+      data.append("cloud_name", "dl9buowui");
+      fetch("https://api.cloudinary.com/v1_1/noteMaker/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPic(data.url.toString());
+          console.log(pic);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return setPicMessage("Please Select an Image");
+    }
+  };
+
   return (
     <MainScreen title="EDIT PROFILE">
       <div>
@@ -46,6 +71,7 @@ const ProfileScreen = () => {
             <Form onSubmit={submitHandler}>
               {loading && <Loading />}
               {success && <Error variant="success">Updated Successfully</Error>}
+              {error && <Error variant="danger">{error}</Error>}
               <Form.Group controlId="name">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
@@ -86,10 +112,11 @@ const ProfileScreen = () => {
                 ></Form.Control>
               </Form.Group>
 
+              {picMessage && <Error variant="danger">{picMessage}</Error>}
               <Form.Group controlId="pic">
                 <Form.Label>Change Profile Picture</Form.Label>
                 <Form.Control
-                  // onChange={(e) => postDetails(e.target.files[0])}
+                  onChange={(e) => postDetails(e.target.files[0])}
                   id="custom-file"
                   type="file"
                   Label="Upload Profile Picture"

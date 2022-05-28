@@ -35,64 +35,38 @@ const RegisterPage = () => {
     } else {
       dispatch(register(name, email, password, pic));
     }
-    // if (password !== confirmpassword) {
-    //   setMessage("Password Do Not Match");
-    // } else {
-    //   setMessage(null);
-    //   try {
-    //     const config = {
-    //       headers: {
-    //         "Content-type": "application/json",
-    //       },
-    //     };
-    //     setLoading(true);
-    //     const { data } = await axios.post(
-    //       "api/users",
-    //       {
-    //         name,
-    //         pic,
-    //         email,
-    //         password,
-    //       },
-    //       config
-    //     );
-    //     setLoading(false);
-    //     localStorage.setItem("userInfo", JSON.stringify(data));
-    //   } catch (error) {
-    //     setError(error.response.data.message);
-    //   }
-    // }
-    // console.log(email);
   };
 
   // image upload function/Cloudinary
-  // const postDetails = (pics) => {
-  //   if (!pic) {
-  //     return setPicMessage("Please Upload An Image");
-  //   }
-  //   setPicMessage(null);
+  const postDetails = (pics) => {
+    if (
+      pics ===
+      "https://images.pexels.com/photos/6283527/pexels-photo-6283527.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ) {
+      return setPicMessage("Please Select an Image");
+    }
+    setPicMessage(null);
+    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+      const data = new FormData();
+      data.append("file", pics);
+      data.append("upload_preset", "noteMaker");
+      data.append("cloud_name", "dl9buowui");
+      fetch("https://api.cloudinary.com/v1_1/dl9buowui/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPic(data.url.toString());
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return setPicMessage("Please Select an Image");
+    }
+  };
 
-  //   if (pics.type === "image/jpgg" || pics.type === "image/png") {
-  //     const data = new FormData();
-  //     data.append("file", pics);
-  //     data.append("upload_preset", "noteMaker");
-  //     data.append("cloud_name", "notemaker");
-  //     fetch("", {
-  //       method: "POST",
-  //       body: data,
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log(data);
-  //         setPic(data.url.toString());
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     return setPicMessage("Please Upload An Image");
-  //   }
-  // };
   return (
     <MainScreen title="Welcome, Register Here">
       <div className="loginContainer">
@@ -141,7 +115,7 @@ const RegisterPage = () => {
           <Form.Group controlId="pic">
             <Form.Label>Profile Picture</Form.Label>
             <Form.Control
-              // onChange={(e) => postDetails(e.target.files[0])}
+              onChange={(e) => postDetails(e.target.files[0])}
               id="custom-file"
               type="file"
               Label="Upload Profile Picture"
