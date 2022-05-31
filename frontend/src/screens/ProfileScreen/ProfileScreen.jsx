@@ -28,16 +28,11 @@ const ProfileScreen = () => {
     if (!userInfo) {
       navigate("/");
     } else {
-      setName(userInfo.name);
       setEmail(userInfo.email);
       setPic(userInfo.pic);
+      // setName(userInfo.name);
     }
   }, [navigate, userInfo]);
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(updateProfile({ name, email, password, pic }));
-  };
 
   const postDetails = (pics) => {
     setPicMessage(null);
@@ -46,7 +41,7 @@ const ProfileScreen = () => {
       data.append("file", pics);
       data.append("upload_preset", "noteMaker");
       data.append("cloud_name", "dl9buowui");
-      fetch("https://api.cloudinary.com/v1_1/noteMaker/image/upload", {
+      fetch("https://api.cloudinary.com/v1_1/dl9buowui/image/upload", {
         method: "post",
         body: data,
       })
@@ -63,8 +58,14 @@ const ProfileScreen = () => {
     }
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (password === confirmPassword)
+      dispatch(updateProfile({ name, email, password, pic }));
+  };
+
   return (
-    <MainScreen title="EDIT PROFILE">
+    <MainScreen title="EDIT PROFILE PICTURE & EMAIL">
       <div>
         <Row className="profileContainer">
           <Col md={6}>
@@ -95,14 +96,14 @@ const ProfileScreen = () => {
               <Form.Group controlId="password">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="password"
                   placeholder="Enter Password"
                   value={name}
                   onChange={(e) => setPassword(e.target.value)}
                 ></Form.Control>
               </Form.Group>
 
-              <Form.Group controlId="confirm password">
+              <Form.Group controlId="confirmPassword">
                 <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
                   type="password"
@@ -123,6 +124,8 @@ const ProfileScreen = () => {
                   custom
                 ></Form.Control>
               </Form.Group>
+
+              <br></br>
 
               <Button type="submit" variant="primary">
                 Update

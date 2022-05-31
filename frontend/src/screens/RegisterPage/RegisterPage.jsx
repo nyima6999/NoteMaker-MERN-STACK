@@ -113,7 +113,7 @@ const RegisterPage = () => {
           {picMessage && <Error variant="danger">{picMessage}</Error>}
 
           <Form.Group controlId="pic">
-            <Form.Label>Profile Picture</Form.Label>
+            <Form.Label>Profile Picture (upload png and jpeg)</Form.Label>
             <Form.Control
               onChange={(e) => postDetails(e.target.files[0])}
               id="custom-file"

@@ -48,16 +48,8 @@ export const createNoteAction = (title, content) => async (dispatch) => {
     dispatch({
       type: NOTES_CREATE_REQUEST,
     });
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const { data } = await axios.post(
-      `api/notes/create`,
-      { title, content },
-      config
-    );
+
+    const { data } = await axios.post(`api/notes/create`, { title, content });
 
     dispatch({
       type: NOTES_LIST_SUCCESS,
