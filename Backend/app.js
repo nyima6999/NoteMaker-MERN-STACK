@@ -7,6 +7,8 @@ const path = require("path");
 
 const userRoutes = require("./routes/userRoutes");
 const noteRoutes = require("./routes/noteRoutes");
+// const errorHandler = require("./middlewares/errorMiddleware");
+// const notFound = require("./middlewares/errorMiddleware");
 
 const mongoose = require("mongoose");
 const db = mongoose.connection;
@@ -39,6 +41,9 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // deployment //
+
+// app.use(notFound);
+// app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log(`Server started on PORT ${PORT}`));
