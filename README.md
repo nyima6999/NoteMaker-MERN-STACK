@@ -8,7 +8,7 @@ is to build full stack note taking app
 
 # Frontend Technologies used
 
-React, Redux, React Router, Bootstrap, Material UI, Html, Css
+React, Redux, React Router, Bootstrap, Cloudinary, Material UI, Html, Css
 
 # Backend Technologies used
 
