@@ -12,4 +12,4 @@ React, Redux, React Router, Bootstrap, Cloudinary, Material UI, Html, Css
 
 # Backend Technologies used
 
-Node.js, Express.js, Mongodb, Mongoose
+Node.js, Express.js, Mongodb, Mongodb
